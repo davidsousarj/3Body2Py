@@ -22,13 +22,13 @@ from math import pi, sqrt
 #d3=(0.5e-3,40)
 #d4=(1.0)
 
-# three body colision!
+# Colision earth!
 #d1=(1.,0.,1.,-1,6.29) 
 #d2=(0.01,1.,1.5,-3.5,12)
 #d3=(0.5e-3,40)
 #d4=(1.0)
 
-# Irregular moon
+# Colision moon!
 #d1=(1.,1.,0.,-1,6.29) 
 #d2=(0.01,1.5,0.0,-3.5,12)
 #d3=(0.5e-3,40)
@@ -47,10 +47,48 @@ from math import pi, sqrt
 #d4=(1.0)
 
 # PERFECT!
-d1=(1.00,3.0,0.0,0.0,3.0) 
-d2=(0.01,3.25,0.0,0.0,15.0)
-d3=(0.5e-3,40)
+#d1=(1.00,3.0,0.0,0.0,3.0) 
+#d2=(0.01,3.25,0.0,0.0,15.0)
+#d3=(0.5e-3,40)
+#d4=(1.0)
+
+# projectile satellite
+#d1=(1.00,3.0,2.50,-0.5,-3.3) 
+#d2=(0.01,3.25,2.0,-1.5,-6.0)
+#d3=(0.5e-3,40)
+#d4=(1.0)
+
+# accelerated
+#d1=(1.00,1.0,0.0,0.0,6.28) 
+#d2=(0.1,2.25,0.0,0.0,6.28)
+#d3=(0.5e-3,40)
+#d4=(1.0)
+
+# just two regular planets
+#d1=(0.01,1.0,0.0,0.0,5.) 
+#d2=(0.001,3.25,0.0,0.0,3.)
+#d3=(0.5e-4,40)
+#d4=(1.0)
+
+# circular perfection
+#d1=(0.01,2000,0.0,0.0,10.) 
+#d2=(0.1,3.,0.0,0.0,3.6)
+#d3=(0.5e-4,40)
+#d4=(1.0)
+
+# dance for me baby
+#d1=(0.01,1.5,0.0,0.5,5.) 
+#d2=(0.10,3.0,0.0,0.0,3.6)
+#d3=(0.5e-4,40)
+#d4=(1.0)
+
+# front colision
+d1=(2.0,0.0, 2.0,-1.5, 1.5) 
+d2=(2.0,0.0,-2.0, 2.5,-2.5)
+d3=(0.5e-4,40)
 d4=(1.0)
+
+clocktick=0 # 0 for fastest animation, microseconds elapsed between steps
 
 m1,x01,y01,vx01,vy01 = d1
 m2,x02,y02,vx02,vy02 = d2
@@ -60,8 +98,8 @@ M = d4
 G=-4*pi**2
 
 # E = K1 + V1 + K2 + V2 + V12
-E0 = m1*(0.5*(vx01**2 + vy01**2) + G*M/sqrt(x01** 2+ y01**2))
-E0+= m2*(0.5*(vx02**2 + vy02**2) + G*M/sqrt(x02** 2+ y02**2))
+E0 = m1*(0.5*(vx01**2 + vy01**2) + G*M/sqrt(x01**2 + y01**2))
+E0+= m2*(0.5*(vx02**2 + vy02**2) + G*M/sqrt(x02**2 + y02**2))
 E0+= G*m1*m2/sqrt((x01-x02)**2+(y01-y02)**2)
 
 # Initializing variables ###############################################
@@ -80,8 +118,8 @@ i=0
 
 ax1=[ G*M*x1[i]/(x1[i]**2+y1[i]**2)**1.5 + G*m2*(x1[i]-x2[i])/((x1[i]-x2[i])**2+(y1[i]-y2[i])**2)**1.5]
 ay1=[ G*M*y1[i]/(x1[i]**2+y1[i]**2)**1.5 + G*m2*(y1[i]-y2[i])/((x1[i]-x2[i])**2+(y1[i]-y2[i])**2)**1.5]
-ax2=[ G*M*x2[i]/(x1[i]**2+y1[i]**2)**1.5 + G*m1*(x2[i]-x1[i])/((x2[i]-x1[i])**2+(y2[i]-y1[i])**2)**1.5]
-ay2=[ G*M*y2[i]/(x1[i]**2+y1[i]**2)**1.5 + G*m1*(y2[i]-y1[i])/((x2[i]-x1[i])**2+(y2[i]-y1[i])**2)**1.5]
+ax2=[ G*M*x2[i]/(x2[i]**2+y2[i]**2)**1.5 + G*m1*(x2[i]-x1[i])/((x2[i]-x1[i])**2+(y2[i]-y1[i])**2)**1.5]
+ay2=[ G*M*y2[i]/(x2[i]**2+y2[i]**2)**1.5 + G*m1*(y2[i]-y1[i])/((x2[i]-x1[i])**2+(y2[i]-y1[i])**2)**1.5]
 
 t=np.arange(0,tf,h)
 
@@ -119,8 +157,8 @@ for i in xrange(0,len(t)-1):
 
 	ax1.append( G*M*x1[i+1]/(x1[i+1]**2+y1[i+1]**2)**1.5 +  G*m2*(x1[i+1]-x2[i+1])/((x1[i+1]-x2[i+1])**2+(y1[i+1]-y2[i+1])**2)**1.5 )
 	ay1.append( G*M*y1[i+1]/(x1[i+1]**2+y1[i+1]**2)**1.5 +  G*m2*(y1[i+1]-y2[i+1])/((x1[i+1]-x2[i+1])**2+(y1[i+1]-y2[i+1])**2)**1.5 )
-	ax2.append( G*M*x2[i+1]/(x1[i+1]**2+y1[i+1]**2)**1.5 +  G*m1*(x2[i+1]-x1[i+1])/((x2[i+1]-x1[i+1])**2+(y2[i+1]-y1[i+1])**2)**1.5 )
-	ay2.append( G*M*y2[i+1]/(x1[i+1]**2+y1[i+1]**2)**1.5 +  G*m1*(y2[i+1]-y1[i+1])/((x2[i+1]-x1[i+1])**2+(y2[i+1]-y1[i+1])**2)**1.5 )
+	ax2.append( G*M*x2[i+1]/(x2[i+1]**2+y2[i+1]**2)**1.5 +  G*m1*(x2[i+1]-x1[i+1])/((x2[i+1]-x1[i+1])**2+(y2[i+1]-y1[i+1])**2)**1.5 )
+	ay2.append( G*M*y2[i+1]/(x2[i+1]**2+y2[i+1]**2)**1.5 +  G*m1*(y2[i+1]-y1[i+1])/((x2[i+1]-x1[i+1])**2+(y2[i+1]-y1[i+1])**2)**1.5 )
 
 	vx1.append( vx1[i] + h*(ax1[i+1] + ax1[i] )/2 )
 	vy1.append( vy1[i] + h*(ay1[i+1] + ay1[i] )/2 )
@@ -140,7 +178,7 @@ for i in xrange(0,len(t)-1):
 		if event.type == QUIT:
 			pygame.quit(); sys.exit();
 
-	msElapsed = clock.tick(120)
+	msElapsed = clock.tick(clocktick)
 
 	X1 = int( sizex/2.+sizex/2.*x1[i]/4. )
 	Y1 = int( sizey/2.-sizey/2.*y1[i]/4. )
@@ -161,7 +199,7 @@ for i in xrange(0,len(t)-1):
 
 	pygame.display.update([planet1,planet2,score])
 
-	if e[i] > 100.0: #collide
+	if e[i] > 10.0: #collide
 		collide = i
 	if collide > 0:
 		label3 = myfont.render(u"Colisão!", 1, red, white)
